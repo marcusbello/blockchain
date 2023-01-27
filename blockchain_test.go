@@ -8,7 +8,7 @@ import (
 )
 
 func TestNewBlock(t *testing.T) {
-	t.Run("create Block", func(t *testing.T) {
+	t.Run("create new Blockchain", func(t *testing.T) {
 		tx := []string{"hello", "world"}
 		prevHash := []byte("")
 		b := NewBlock(tx, prevHash)
@@ -29,7 +29,7 @@ func TestNewBlock(t *testing.T) {
 }
 
 func TestNewHash(t *testing.T) {
-	t.Run("NewHash", func(t *testing.T) {
+	t.Run("create new hash", func(t *testing.T) {
 		tx := []string{"hello", "world"}
 		prevHash := []byte("")
 		currentTime := time.Now()
@@ -38,16 +38,14 @@ func TestNewHash(t *testing.T) {
 			t.Errorf("NewHash() = nil")
 		}
 	})
-	t.Run("confirm crypto", func(t *testing.T) {
+	t.Run("confirm Tx hashing", func(t *testing.T) {
 		txs := []string{"hello", "world"}
 		var prevHash = []byte("")
 		currentTime := time.Now()
 		prevHashTime := append(prevHash, currentTime.String()...)
-		t.Log(string(prevHashTime))
 		for _, tx := range txs {
 			prevHashTime = append(prevHashTime, string(tx)...)
 		}
-		t.Log(string(prevHashTime))
 		want := sha256.Sum256(prevHashTime)
 		got := NewHash(currentTime, txs, prevHash)
 		if !reflect.DeepEqual(got, want[:]) {
